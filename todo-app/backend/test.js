@@ -1,21 +1,16 @@
-const {
-  createTask,
-  getAllTasks,
-  getTasksByUser,
-  getTaskById,
-  updateTask,
-  deleteTask,
-} = require("./controllers/taskController");
-const fn = getTasksByUser;
+// const {
+//   getTaskBlockByWeek,
+//   getSummaryByWeek,
+// } = require("./controllers/blockController");
+
+const { updateTaskStatus } = require("./controllers/taskController");
+
+const fn = updateTaskStatus;
 
 const req = {
-  //   body: {
-  //     title: "Đọc tài liệu",
-  //     description: "Đọc hướng dẫn dự án",
-  //     due_date: "2023-10-31",
-  //   },
-  params: { user_id: "2" }, // Thay đổi ID theo nhu cầu
-  query: {},
+  body: { status_id: 1 },
+  params: { id: "1" },
+  // query: { status_id: 1 },
 };
 
 const res = {
@@ -25,7 +20,7 @@ const res = {
   },
   json(data) {
     console.log(`✅ Status: ${this.statusCode}`);
-    console.log("📦 Response:", data);
+    console.log("📦 Response:", JSON.stringify(data, null, 2));
   },
 };
 

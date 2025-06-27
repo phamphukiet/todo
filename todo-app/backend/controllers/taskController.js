@@ -110,3 +110,29 @@ exports.deleteTask = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.updateTaskStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status_id } = req.body;
+
+  console.log("🛠️ PUT /api/task:", { id, status_id });
+
+  try {
+    const result = await pool.query(
+      "UPDATE tasks SET status_id = $1 WHERE id = $2",
+      [status_id, id]
+    );
+
+    console.log("🔍 UPDATE result:", result.rowCount); // 👈 quan trọng
+
+    if (result.rowCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Task không tồn tại hoặc không cập nhật được" });
+    }
+
+    res.json({ message: "Cập nhật thành công" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

@@ -6,6 +6,9 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 
+const frontendPath = path.join(__dirname, '../frontend');
+app.use(express.static(frontendPath));
+
 // Ghi log request
 app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.originalUrl}`);
@@ -16,10 +19,19 @@ app.use((req, res, next) => {
 const routesPath = path.join(__dirname, "routes");
 fs.readdirSync(routesPath).forEach((file) => {
   if (file.endsWith(".js")) {
-    const routeName = file.replace(".js", ""); // ví dụ: user → 'user'
-    const routePath = `/api/${routeName}`; // → '/api/user'
-    const routeModule = require(`./routes/${file}`);
-    app.use(routePath, routeModule);
+    const routeName = file.replace(".js", "");
+    const routePath = `/api/${routeName}`;
+    try {
+      const routeModule = require(`./routes/${file}`);
+      if (typeof routeModule !== "function") {
+        throw new Error(`Không export ra router từ ${file}`);
+      }
+      app.use(routePath, routeModule);
+      console.log(`✅ Route loaded: ${routePath}`);
+    } catch (err) {
+      console.error(`❌ Route ${file} lỗi: ${err.message}`);
+    }
+
     console.log(`✅ Route loaded: ${routePath}`);
   }
 });
