@@ -1,20 +1,30 @@
 const express = require("express");
-const cors = require("cors");
-const app = express();
+const fs = require("fs");
+const path = require("path");
+require("dotenv").config();
 
-// Middlewares
-app.use(cors());
+const app = express();
 app.use(express.json());
 
-// API routes
-app.use("/api/tasks", require("./routes/tasks"));
+// Ghi log request
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.originalUrl}`);
+  next();
+});
 
-// Serve frontend tĩnh
-const path = require("path");
-app.use("/", express.static(path.join(__dirname, "../frontend")));
+// Tự động load tất cả file trong routes/
+const routesPath = path.join(__dirname, "routes");
+fs.readdirSync(routesPath).forEach((file) => {
+  if (file.endsWith(".js")) {
+    const routeName = file.replace(".js", ""); // ví dụ: user → 'user'
+    const routePath = `/api/${routeName}`; // → '/api/user'
+    const routeModule = require(`./routes/${file}`);
+    app.use(routePath, routeModule);
+    console.log(`✅ Route loaded: ${routePath}`);
+  }
+});
 
-// Khởi chạy server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
