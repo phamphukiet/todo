@@ -6,7 +6,7 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 
-const frontendPath = path.join(__dirname, '../frontend');
+const frontendPath = path.join(__dirname, "../frontend");
 app.use(express.static(frontendPath));
 
 // Ghi log request

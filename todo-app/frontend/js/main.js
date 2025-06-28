@@ -2,6 +2,12 @@ document.addEventListener("DOMContentLoaded", loadTasks);
 document.getElementById("taskForm").addEventListener("submit", createTask);
 
 let editingTaskId = null;
+let statusOptions = [];
+
+async function loadStatusOptions() {
+  const res = await fetch("http://localhost:3000/api/status");
+  statusOptions = await res.json();
+}
 
 async function loadTasks() {
   const res = await fetch("http://localhost:3000/api/tasks");
@@ -14,6 +20,9 @@ async function loadTasks() {
         <td>${i + 1}</td>
         <td>${task.title}</td>
         <td>${task.description || ""}</td>
+        <td><span class="badge bg-secondary">${
+          task.status || "Không xác định"
+        }</span></td>
         <td>
           <button onclick='editTask(${task.id}, ${JSON.stringify(
       task.title

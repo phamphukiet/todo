@@ -1,7 +1,8 @@
 const CURRENT_USER_ID = 1;
+let currentDate = new Date();
 const MAX_TASK_PER_DAY = 5;
 
-// ----------- Helper ngày ------------------
+// ===== DATE UTILITIES ====== //
 
 function getWeekRange(date) {
   const day = new Date(date);
@@ -14,20 +15,26 @@ function getWeekRange(date) {
   return { monday, sunday };
 }
 
-function formatDate(date) {
-  return date.toLocaleDateString("vi-VN");
-}
-
 function getWeekNumber(date) {
   const firstJan = new Date(date.getFullYear(), 0, 1);
   const days = Math.floor((date - firstJan) / (24 * 60 * 60 * 1000));
   return Math.ceil((days + firstJan.getDay() + 1) / 7);
 }
 
-// ----------- Hiển thị người dùng ------------
+function formatDateDisplay(dateStr) {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  return d.toLocaleDateString("vi-VN");
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString("vi-VN");
+}
+
+// ===== USER & INIT LOADING ===== //
 
 function fetchAndShowUsername() {
-  fetch(`http://localhost:3000/api/auth/${CURRENT_USER_ID}`)
+  fetch(`http://localhost:3000/api/user/${CURRENT_USER_ID}`)
     .then((res) => res.json())
     .then((user) => {
       document.getElementById(
@@ -40,13 +47,12 @@ function fetchAndShowUsername() {
     });
 }
 
-// ----------- Điều hướng tuần ----------------
-
-let currentDate = new Date();
+// ===== WEEK NAVIGATION ====== //
 
 function updateWeekView() {
   const weekRange = getWeekRange(currentDate);
   const weekNumber = getWeekNumber(currentDate);
+
   document.getElementById(
     "currentWeek"
   ).innerText = `Tuần ${weekNumber}: ${formatDate(
@@ -76,7 +82,7 @@ document.getElementById("datePicker").addEventListener("change", (e) => {
   updateWeekView();
 });
 
-// ----------- Render ---------------
+// ===== UI RENDERING ===== //
 
 function renderWeekColumns() {
   const weekRange = getWeekRange(currentDate);
@@ -104,59 +110,6 @@ function renderWeekColumns() {
   }
 }
 
-// ----------- Gọi API & render task ------------
-
-function fetchBlockTasks() {
-  const weekNumber = getWeekNumber(currentDate);
-
-  fetch(`http://localhost:3000/api/block/${CURRENT_USER_ID}?week=${weekNumber}`)
-    .then((res) => res.json())
-    .then((data) => {
-      renderTasksByDay(data.tasks);
-    })
-    .catch((err) => {
-      console.error("❌ Lỗi khi gọi block API:", err);
-    });
-
-  console.log("📦 Tải lại block data sau cập nhật...");
-}
-
-function fetchTaskSummary() {
-  const weekNumber = getWeekNumber(currentDate);
-
-  fetch(
-    `http://localhost:3000/api/block/summary/${CURRENT_USER_ID}?week=${weekNumber}`
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      applyOverloadWarning(data.summary);
-    })
-    .catch((err) => {
-      console.error("❌ Lỗi khi gọi summary API:", err);
-    });
-}
-
-function applyOverloadWarning(summary) {
-  const weekRange = getWeekRange(currentDate);
-
-  Object.keys(summary).forEach((dateStr, index) => {
-    const taskCount = summary[dateStr];
-
-    const dayDate = new Date(dateStr);
-    const diff = Math.floor(
-      (dayDate - weekRange.monday) / (1000 * 60 * 60 * 24)
-    );
-    if (diff < 0 || diff > 6) return;
-
-    const card = document.getElementById(`day-${diff}`).parentElement; // .card
-    if (taskCount > MAX_TASK_PER_DAY) {
-      card.classList.add("border-danger");
-    } else {
-      card.classList.remove("border-danger");
-    }
-  });
-}
-
 function renderTasksByDay(blockArray) {
   for (let i = 0; i < 7; i++) {
     const dayContainer = document.getElementById(`day-${i}`);
@@ -182,7 +135,8 @@ function renderTasksByDay(blockArray) {
           <option value="3" ${
             task.status_id == 3 ? "selected" : ""
           }>Done</option>
-        </select>`;
+        </select>
+      `;
 
       const select = taskBox.querySelector("select");
       select.addEventListener("change", () => {
@@ -194,26 +148,6 @@ function renderTasksByDay(blockArray) {
       dayContainer.appendChild(taskBox);
     });
   }
-}
-
-function updateTaskStatus(taskId, newStatusId) {
-  console.log(`📤 Cập nhật task ${taskId} với trạng thái ${newStatusId}`);
-  fetch(`http://localhost:3000/api/tasks/${taskId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status_id: parseInt(newStatusId) }),
-  })
-    .then((res) => {
-      console.log("📥 Response từ PUT:", res.status, res.statusText);
-      if (!res.ok) throw new Error("Lỗi cập nhật trạng thái");
-      return res.json();
-    })
-    .then(() => {
-      updateWeekView();
-    })
-    .catch((err) => {
-      console.error("❌ Lỗi cập nhật task:", err);
-    });
 }
 
 function getStatusColor(status) {
@@ -229,13 +163,75 @@ function getStatusColor(status) {
   }
 }
 
-function formatDateDisplay(dateStr) {
-  if (!dateStr) return "";
-  const d = new Date(dateStr);
-  return d.toLocaleDateString("vi-VN");
+// ===== FETCH API CALLS ===== //
+
+function fetchBlockTasks() {
+  const weekNumber = getWeekNumber(currentDate);
+  console.log("📦 Tải lại block data sau cập nhật...");
+  fetch(`http://localhost:3000/api/block/${CURRENT_USER_ID}?week=${weekNumber}`)
+    .then((res) => res.json())
+    .then((data) => {
+      renderTasksByDay(data.tasks);
+    })
+    .catch((err) => console.error("❌ Lỗi khi fetch block:", err));
 }
 
-// ----------- Init --------------
+function fetchTaskSummary() {
+  const weekNumber = getWeekNumber(currentDate);
+  fetch(
+    `http://localhost:3000/api/block/summary/${CURRENT_USER_ID}?week=${weekNumber}`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      applyOverloadWarning(data.summary);
+    });
+}
+
+function applyOverloadWarning(summary) {
+  const weekRange = getWeekRange(currentDate);
+  Object.keys(summary).forEach((dateStr) => {
+    const count = summary[dateStr];
+    const dayDate = new Date(dateStr);
+    const diff = Math.floor(
+      (dayDate - weekRange.monday) / (1000 * 60 * 60 * 24)
+    );
+    if (diff < 0 || diff > 6) return;
+    const card = document.getElementById(`day-${diff}`).parentElement;
+    if (count > MAX_TASK_PER_DAY) {
+      card.classList.add("border-danger");
+    } else {
+      card.classList.remove("border-danger");
+    }
+  });
+}
+
+// ===== TASK STATUS UPDATE ===== //
+
+function updateTaskStatus(taskId, newStatusId) {
+  const url = `http://localhost:3000/api/task/${taskId}/status`;
+  const payload = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status_id: parseInt(newStatusId) }),
+  };
+
+  console.log(url, payload);
+
+  fetch(url, payload)
+    .then((res) => {
+      console.log("📥 Response từ PUT:", res.status, res.statusText);
+      if (!res.ok) throw new Error("Lỗi cập nhật trạng thái");
+      return res.json();
+    })
+    .then(() => {
+      updateWeekView();
+    })
+    .catch((err) => {
+      console.error("❌ Lỗi cập nhật task:", err);
+    });
+}
+
+// ===== INIT ===== //
 
 fetchAndShowUsername();
 updateWeekView();

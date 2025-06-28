@@ -120,10 +120,10 @@ exports.updateTaskStatus = async (req, res) => {
   try {
     const result = await pool.query(
       "UPDATE tasks SET status_id = $1 WHERE id = $2",
-      [status_id, id]
+      [parseInt(status_id), parseInt(id)]
     );
 
-    console.log("🔍 UPDATE result:", result.rowCount); // 👈 quan trọng
+    console.log("🔍 UPDATE result:", result.rowCount);
 
     if (result.rowCount === 0) {
       return res
@@ -131,8 +131,8 @@ exports.updateTaskStatus = async (req, res) => {
         .json({ message: "Task không tồn tại hoặc không cập nhật được" });
     }
 
-    res.json({ message: "Cập nhật thành công" });
+    return res.json({ message: "Cập nhật thành công" });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 };
