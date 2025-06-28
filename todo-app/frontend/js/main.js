@@ -92,3 +92,92 @@ function editTask(id, title, description) {
   editingTaskId = id;
   document.querySelector("#taskForm button").innerText = "💾 Cập nhật Task";
 }
+
+//login
+document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("loginForm");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const res = await fetch("http://localhost:3000/api/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+              localStorage.setItem("token", data.token);
+              window.location.href = "/table/main.html"; // chuyển đúng tới file bạn có
+            } else {
+              document.getElementById("loginError").textContent =
+                data.error || "Đăng nhập thất bại";
+            }
+          } catch (err) {
+            document.getElementById("loginError").textContent =
+              "Lỗi kết nối đến server.";
+          }
+        });
+      });
+      
+//register
+document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("registerForm");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const res = await fetch("http://localhost:3000/api/auth/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+              alert("Đăng ký thành công! Vui lòng đăng nhập.");
+              window.location.href = "/user/login.html";
+            } else {
+              document.getElementById("registerError").textContent =
+                data.error || "Đăng ký thất bại";
+            }
+          } catch (err) {
+            document.getElementById("registerError").textContent =
+              "Lỗi kết nối đến server.";
+          }
+        });
+      });
+
+//logout
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("token");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const welcomeUser = document.getElementById("welcomeUser");
+
+  if (!token) {
+    // Nếu chưa đăng nhập → chuyển về login
+    window.location.href = "/user/login.html";
+    return;
+  }
+
+  // ✅ Giải mã token để lấy tên người dùng
+  const payload = JSON.parse(atob(token.split('.')[1])); // Phần giữa của JWT là payload
+  const username = payload.username;
+
+  // ✅ Hiển thị tên người dùng
+  welcomeUser.textContent = `Xin chào, ${username}`;
+  logoutBtn.classList.remove("d-none");
+
+  // ✅ Gán sự kiện logout
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "/user/login.html";
+  });
+});
