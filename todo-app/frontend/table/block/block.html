@@ -15,17 +15,36 @@
         <h5 id="currentWeek" class="mb-0 flex-grow-1 text-center fw-bold"></h5>
         <button id="nextWeek" class="btn btn-outline-primary">Tuần sau ➡</button>
         <input type="date" id="datePicker" class="form-control w-auto" />
+        <button id="btnCreateTask" class="btn btn-success">➕ Tạo task</button>
     </div>
 
     <h4 id="usernameDisplay" class="mb-3 fw-semibold text-primary">Xin chào, ...</h4>
 
-    <div id="weekView" class="row row-cols-1 row-cols-md-7 g-3"></div>
-    <!-- <div id="taskList" class="mt-4">
-        <h5 class="mb-3">Danh sách công việc</h5>
-        <ul id="taskItems" class="list-group"></ul> -->
+    <div id="weekView" class="d-flex flex-wrap"></div>
+
+    <!-- Modal tạo/xem/sửa task -->
+    <div id="taskModal" class="card p-3 position-fixed bg-white shadow"
+        style="top: 10%; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px; display: none; z-index: 1000;">
+        <h5 id="taskModalTitle" class="mb-2"></h5>
+        <p id="taskModalDesc" class="text-muted small mb-2"></p>
+        <p id="taskModalDue" class="mb-1"></p>
+        <p id="taskModalStatus" class="mb-3"></p>
+        <div class="d-flex justify-content-between">
+            <button class="btn btn-outline-danger btn-sm" id="btnDeleteTask">🗑 Xoá</button>
+            <button class="btn btn-outline-primary btn-sm" id="btnEditTask">💾 Lưu</button>
+            <button class="btn btn-secondary btn-sm"
+                onclick="document.getElementById('taskModal').style.display = 'none';">Đóng</button>
+        </div>
+    </div>
 
     <!-- JS -->
-    <script src="block.js"></script>
+    <script src="./js/block.utils.js"></script>
+    <script src="./js/block.api.js"></script>
+    <script src="./js/block.ui.js"></script>
+    <script src="./js/block.js"></script>
+    <script src="./js/block.modal.js"></script>
+
+
 </body>
 
 </html>
