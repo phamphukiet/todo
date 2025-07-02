@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (res.ok) {
               localStorage.setItem("token", data.token);
-              window.location.href = "/table/main.html"; // chuyển đúng tới file bạn có
+              window.location.href = "../table/main.html"; // chuyển đúng tới file bạn có
             } else {
               document.getElementById("loginError").textContent =
                 data.error || "Đăng nhập thất bại";
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (res.ok) {
               alert("Đăng ký thành công! Vui lòng đăng nhập.");
-              window.location.href = "/user/login.html";
+              window.location.href = "../user/login.html";
             } else {
               document.getElementById("registerError").textContent =
                 data.error || "Đăng ký thất bại";
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!token) {
     // Nếu chưa đăng nhập → chuyển về login
-    window.location.href = "/user/login.html";
+    window.location.href = "../user/login.html";
     return;
   }
 
@@ -178,6 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // ✅ Gán sự kiện logout
   logoutBtn.addEventListener("click", () => {
     localStorage.removeItem("token");
-    window.location.href = "/user/login.html";
+    window.location.href = "../user/login.html";
   });
 });
