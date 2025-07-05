@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", loadTasks);
+document.addEventListener("DOMContentLoaded", loadtask);
 document.getElementById("taskForm").addEventListener("submit", createTask);
 
 let editingTaskId = null;
@@ -9,12 +9,12 @@ async function loadStatusOptions() {
   statusOptions = await res.json();
 }
 
-async function loadTasks() {
-  const res = await fetch("http://localhost:3000/api/tasks");
-  const tasks = await res.json();
+async function loadtask() {
+  const res = await fetch("http://localhost:3000/api/task");
+  const task = await res.json();
   const tbody = document.getElementById("taskTableBody");
   tbody.innerHTML = "";
-  tasks.forEach((task, i) => {
+  task.forEach((task, i) => {
     tbody.innerHTML += `
       <tr>
         <td>${i + 1}</td>
@@ -45,26 +45,23 @@ async function createTask(e) {
 
   if (editingTaskId) {
     // Sửa task
-    const res = await fetch(
-      `http://localhost:3000/api/tasks/${editingTaskId}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description }),
-      }
-    );
+    const res = await fetch(`http://localhost:3000/api/task/${editingTaskId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, description }),
+    });
 
     if (res.ok) {
       editingTaskId = null;
       document.querySelector("#taskForm button").innerText = "➕ Thêm Task";
       e.target.reset();
-      await loadTasks(); // <<< Đảm bảo gọi lại bảng sau khi update thành công
+      await loadtask(); // <<< Đảm bảo gọi lại bảng sau khi update thành công
     } else {
       alert("Không thể cập nhật task.");
     }
   } else {
     // Thêm mới task
-    const res = await fetch("http://localhost:3000/api/tasks", {
+    const res = await fetch("http://localhost:3000/api/task", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: 1, title, description, status_id: 1 }),
@@ -72,7 +69,7 @@ async function createTask(e) {
 
     if (res.ok) {
       e.target.reset();
-      await loadTasks();
+      await loadtask();
     } else {
       alert("Không thể tạo task mới.");
     }
@@ -80,10 +77,10 @@ async function createTask(e) {
 }
 
 async function deleteTask(id) {
-  await fetch(`http://localhost:3000/api/tasks/${id}`, {
+  await fetch(`http://localhost:3000/api/task/${id}`, {
     method: "DELETE",
   });
-  loadTasks();
+  loadtask();
 }
 
 function editTask(id, title, description) {
@@ -95,65 +92,65 @@ function editTask(id, title, description) {
 
 //login
 document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("loginForm");
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const username = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
+  const form = document.getElementById("loginForm");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-          try {
-            const res = await fetch("http://localhost:3000/api/auth/login", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username, password }),
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-              localStorage.setItem("token", data.token);
-              window.location.href = "../table/main.html"; // chuyển đúng tới file bạn có
-            } else {
-              document.getElementById("loginError").textContent =
-                data.error || "Đăng nhập thất bại";
-            }
-          } catch (err) {
-            document.getElementById("loginError").textContent =
-              "Lỗi kết nối đến server.";
-          }
-        });
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
-      
+
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("token", data.token);
+        window.location.href = "../table/main.html"; // chuyển đúng tới file bạn có
+      } else {
+        document.getElementById("loginError").textContent =
+          data.error || "Đăng nhập thất bại";
+      }
+    } catch (err) {
+      document.getElementById("loginError").textContent =
+        "Lỗi kết nối đến server.";
+    }
+  });
+});
+
 //register
 document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("registerForm");
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const username = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
+  const form = document.getElementById("registerForm");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
-          try {
-            const res = await fetch("http://localhost:3000/api/auth/register", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username, password }),
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-              alert("Đăng ký thành công! Vui lòng đăng nhập.");
-              window.location.href = "../user/login.html";
-            } else {
-              document.getElementById("registerError").textContent =
-                data.error || "Đăng ký thất bại";
-            }
-          } catch (err) {
-            document.getElementById("registerError").textContent =
-              "Lỗi kết nối đến server.";
-          }
-        });
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Đăng ký thành công! Vui lòng đăng nhập.");
+        window.location.href = "../user/login.html";
+      } else {
+        document.getElementById("registerError").textContent =
+          data.error || "Đăng ký thất bại";
+      }
+    } catch (err) {
+      document.getElementById("registerError").textContent =
+        "Lỗi kết nối đến server.";
+    }
+  });
+});
 
 //logout
 document.addEventListener("DOMContentLoaded", () => {
@@ -168,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ✅ Giải mã token để lấy tên người dùng
-  const payload = JSON.parse(atob(token.split('.')[1])); // Phần giữa của JWT là payload
+  const payload = JSON.parse(atob(token.split(".")[1])); // Phần giữa của JWT là payload
   const username = payload.username;
 
   // ✅ Hiển thị tên người dùng
@@ -182,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 //  code này là phần nâng cấp giao diện
-// function togglePassword() { 
+// function togglePassword() {
 //   const pwd = document.getElementById("password");
 //   const icon = document.querySelector(".toggle-password");
 //   if (pwd.type === "password") {
