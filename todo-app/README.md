@@ -1,3 +1,4 @@
-1 Setup command 
+1 Setup
 Docker-compose:
-    docker-compose up --build
+    requirement: open Docker program and check port not in using
+    command: docker-compose up --build
