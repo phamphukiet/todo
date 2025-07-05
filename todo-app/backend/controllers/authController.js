@@ -1,5 +1,50 @@
-const pool = require("../db");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const pool = require("../db");
+
+const SECRET_KEY = process.env.SECRET_KEY || "mydefaultsecret";
+
+// Xử lý đăng ký
+exports.register = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      "INSERT INTO users (username, password_hash) VALUES ($1, $2) RETURNING id, username",
+      [username, hash]
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Register error:", err.message);
+    res.status(400).json({ error: "Tên người dùng đã tồn tại hoặc lỗi khác." });
+  }
+};
+
+// Xử lý đăng nhập
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+    if (result.rows.length === 0) {
+      return res.status(401).json({ error: "Sai tên đăng nhập" });
+    }
+
+    const user = result.rows[0];
+    const match = await bcrypt.compare(password, user.password_hash);
+    if (!match) {
+      return res.status(401).json({ error: "Sai mật khẩu" });
+    }
+
+    const token = jwt.sign({ id: user.id, username: user.username }, SECRET_KEY, { expiresIn: "1d" });
+    res.json({ token });
+  } catch (err) {
+    console.error("Login error:", err.message);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+};
+
+
 
 exports.createUser = async (req, res) => {
   const { username, password } = req.body;
@@ -107,3 +152,5 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
