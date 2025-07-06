@@ -27,7 +27,7 @@ document.getElementById("taskForm").addEventListener("submit", function (e) {
     title: document.getElementById("taskTitle").value.trim(),
     description: document.getElementById("taskDesc").value.trim(),
     due_date: document.getElementById("taskDueDate").value,
-    user_id: CURRENT_USER_ID,
+    user_id: getCurrentUserId(),
     status_id: 1,
   };
 

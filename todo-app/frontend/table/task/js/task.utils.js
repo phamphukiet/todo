@@ -23,3 +23,8 @@ function getDeadlineStatus(dueDateStr) {
   if (diffDays <= 3) return "nearing";
   return "ok";
 }
+
+function getCurrentUserId() {
+  const id = localStorage.getItem("user_id");
+  return parseInt(id);
+}

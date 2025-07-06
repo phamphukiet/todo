@@ -15,9 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const data = await res.json();
+        console.log("Login response:", data);
 
         if (res.ok) {
           localStorage.setItem("token", data.token);
+          localStorage.setItem("username", data.username);
+          localStorage.setItem("user_id", data.user_id);
           window.location.href = "../../index.html";
         } else {
           const errorMsg = data?.error || "Đăng nhập thất bại";
@@ -25,11 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (err) {
         if (err instanceof TypeError) {
-          // Lỗi mạng thực sự (VD: server không chạy)
           document.getElementById("loginError").textContent =
             "Không thể kết nối đến server.";
         } else {
-          // Các lỗi khác (có thể JSON lỗi từ backend)
           document.getElementById("loginError").textContent =
             err.message || "Đã xảy ra lỗi.";
         }
