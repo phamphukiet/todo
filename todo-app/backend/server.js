@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 
 const frontendPath = path.join(__dirname, "../frontend");
+console.log("Serving static files from:", frontendPath);
 app.use(express.static(frontendPath));
 
 // Ghi log request
@@ -35,7 +36,6 @@ fs.readdirSync(routesPath).forEach((file) => {
     console.log(`✅ Route loaded: ${routePath}`);
   }
 });
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

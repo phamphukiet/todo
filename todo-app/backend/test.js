@@ -3,13 +3,17 @@
 //   getSummaryByWeek,
 // } = require("./controllers/blockController");
 
-const { updateTaskStatus } = require("./controllers/taskController");
+// const { updateTaskStatus } = require("./controllers/taskController");
 
-const fn = updateTaskStatus;
+// const { getKanbanData } = require("./controllers/kanbanController");
+
+const { loginUser } = require("./controllers/authController");
+
+const fn = loginUser;
 
 const req = {
-  body: { status_id: 1 },
-  params: { id: "1" },
+  body: { username: "kietpro", password: "12345" },
+  // params: { user_id: "1" },
   // query: { status_id: 1 },
 };
 

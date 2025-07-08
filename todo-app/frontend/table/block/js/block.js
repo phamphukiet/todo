@@ -1,4 +1,18 @@
-const CURRENT_USER_ID = 1;
+let CURRENT_USER_ID = null;
+
+try {
+  const token = localStorage.getItem("token");
+  if (token) {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    CURRENT_USER_ID = payload.user_id || payload.id;
+  } else {
+    throw new Error("Chưa đăng nhập");
+  }
+} catch (err) {
+  console.error("❌ Không thể xác định user_id:", err);
+  alert("Bạn cần đăng nhập trước khi truy cập block view.");
+}
+
 let currentDate = new Date();
 
 document.getElementById("prevWeek").addEventListener("click", () => {

@@ -1,14 +1,14 @@
 function getAllTasks() {
-  return fetch(`http://localhost:3000/api/task/${CURRENT_USER_ID}`).then(
-    (res) => {
-      if (!res.ok) throw new Error("Lỗi khi tải danh sách task");
-      return res.json();
-    }
-  );
+  const userId = getCurrentUserId();
+  return fetch(`http://localhost:3000/api/task/${userId}`).then((res) => {
+    if (!res.ok) throw new Error("Lỗi khi tải danh sách task");
+    return res.json();
+  });
 }
 
 function createTask(task) {
-  return fetch(`http://localhost:3000/api/task/${CURRENT_USER_ID}`, {
+  const userId = getCurrentUserId();
+  return fetch(`http://localhost:3000/api/task/${userId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
