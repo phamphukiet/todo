@@ -12,7 +12,7 @@ const { loginUser } = require("./controllers/authController");
 const fn = loginUser;
 
 const req = {
-  body: { username: "kietpro", password: "12345" },
+  body: { username: "postgres", password: "12345" },
   // params: { user_id: "1" },
   // query: { status_id: 1 },
 };
