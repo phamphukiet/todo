@@ -19,6 +19,26 @@ document.addEventListener("DOMContentLoaded", () => {
       modeText.textContent = body.classList.contains("dark")
         ? "Light Mode"
         : "Dark Mode";
+      syncIframeDarkMode();
     });
   }
+
+  function syncIframeDarkMode() {
+    const iframe = document.getElementById('mainIframe');
+    if (!iframe) return;
+    try {
+      const iframeBody = iframe.contentDocument.body;
+      if (document.body.classList.contains('dark')) {
+        iframeBody.classList.add('dark');
+      } else {
+        iframeBody.classList.remove('dark');
+      }
+    } catch (e) { }
+  }
+
+  // Parent (main window)
+  const iframe = document.getElementById('my-iframe');
+  iframe.contentWindow.postMessage({ theme: 'dark' }, '*');
+
+  // Gọi hàm này mỗi khi bật/tắt dark mode
 });

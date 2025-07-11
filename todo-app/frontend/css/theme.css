@@ -1,36 +1,59 @@
-:root {
-  --body-bg: #e4e9f7;
-  --text-color: #333;
-  --sidebar-bg: #fff;
-  --primary-color: #695cfe;
-  --primary-light: #f6f5ff;
-  --toggle-bg: #ddd;
-  --white: #fff;
-
-  --transition-fast: all 0.2s ease;
-  --transition-med: all 0.4s ease;
-  --transition-slow: all 0.6s ease;
+body {
+    font-family: "Tomorrow", sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 
-body {
-  background: var(--body-bg);
-  color: var(--text-color);
-  font-family: "Tomorrow", sans-serif;
-  font-weight: 500;
-  margin: 0;
-  height: 100vh;
-  transition: var(--transition-med);
+/* You can also apply it to specific elements */
+h1, h2, h3 {
+    font-family: "Tomorrow", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+
+}
+
+ h2 {
+            display: flex;
+            align-items: center; /* Căn giữa các mục theo chiều dọc */
+            justify-content: center; 
+            color: #007bff;
+            font-size: 3em;
+            margin-top: 10px;
+        }
+
+        .small-gif {
+            width: 90px; /* GIF nhỏ hơn cho h2 */
+            height: auto;
+            margin-right: 5px;
+        }
+:root {
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF; 
+    --primary-color: #695CFE;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+
+    --trans-03: all 0.2s ease;
+    --trans-03: all 0.3s ease;
+    --trans-04: all 0.4s ease;
+    --trans-05: all 0.5s ease;
+}
+body{
+    height: 100vh;
+    background: var(--body-color);
+    transition: var(--trans-04);
+}
+
+body.dark{
+    --body-color: #18181A;
+    --sidebar-color: #242526; 
+    --primary-color: #3A3B3C;
+    --primary-color-light: #3A3B3C;
+    --toggle-color: #FFF;
+    --text-color: #CCC;
 }
 
 body.dark {
-  --body-bg: #18181a;
-  --text-color: #ccc;
-  --sidebar-bg: #242526;
-  --primary-color: #3a3b3c;
-  --primary-light: #3a3b3c;
-  --toggle-bg: #fff;
-  --white: #000;
-
-  background: var(--body-bg);
-  color: var(--text-color);
+    background: var(--primary-color);
 }

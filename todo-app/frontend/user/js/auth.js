@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 //  code này là phần nâng cấp giao diện
-function togglePassword() { 
+function togglePassword() {
   const pwd = document.getElementById("password");
   const icon = document.querySelector(".toggle-password");
   if (pwd.type === "password") {
@@ -100,7 +100,7 @@ let currentLang = "vie";
 function toggleLanguage() {
   const slider = document.getElementById("langSlider");
   if (currentLang === "vie") {
-    slider.style.transform = "translateX(42px)";
+    slider.style.transform = "translateX(28px)";
     currentLang = "eng";
     applyEnglish();
   } else {
@@ -130,7 +130,7 @@ function applyVietnamese() {
   document.getElementById("registerLink").innerText = "Đăng ký tại đây";
 }
 function applyEnglish() {
-  if(document.getElementById("loginTitle")) {
+  if (document.getElementById("loginTitle")) {
     document.getElementById("siteSubtitle").innerText = "Build a To-Do List management website";
     document.getElementById("loginTitle").innerText = "Login";
     document.getElementById("username").placeholder = "Username";
@@ -138,7 +138,7 @@ function applyEnglish() {
     document.getElementById("loginButton").innerText = "Login";
     document.getElementById("noAccount").innerText = "Don't have an account?";
     document.getElementById("registerLink").innerText = "Register here";
-  } else if(document.getElementById("registerTitle")) {
+  } else if (document.getElementById("registerTitle")) {
     document.getElementById("siteSubtitle").innerText = "Build a To-Do List management website";
     document.getElementById("registerTitle").innerText = "Register";
     document.getElementById("username").placeholder = "Username";
@@ -150,7 +150,7 @@ function applyEnglish() {
 }
 
 function applyVietnamese() {
-  if(document.getElementById("loginTitle")) {
+  if (document.getElementById("loginTitle")) {
     document.getElementById("siteSubtitle").innerText = "Xây dựng website quản lý To-Do List";
     document.getElementById("loginTitle").innerText = "Đăng nhập";
     document.getElementById("username").placeholder = "Tên đăng nhập";
@@ -158,7 +158,7 @@ function applyVietnamese() {
     document.getElementById("loginButton").innerText = "Đăng nhập";
     document.getElementById("noAccount").innerText = "Bạn chưa có tài khoản?";
     document.getElementById("registerLink").innerText = "Đăng ký tại đây";
-  } else if(document.getElementById("registerTitle")) {
+  } else if (document.getElementById("registerTitle")) {
     document.getElementById("siteSubtitle").innerText = "Xây dựng website quản lý To-Do List";
     document.getElementById("registerTitle").innerText = "Đăng ký";
     document.getElementById("username").placeholder = "Tên đăng nhập";

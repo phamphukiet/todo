@@ -7,12 +7,12 @@
 
 // const { getKanbanData } = require("./controllers/kanbanController");
 
-const { loginUser } = require("./controllers/authController");
+const { loginUser, registerUser } = require("./controllers/authController");
 
 const fn = loginUser;
 
 const req = {
-  body: { username: "postgres", password: "12345" },
+  body: { username: "sunce", password: "1811" },
   // params: { user_id: "1" },
   // query: { status_id: 1 },
 };
