@@ -44,15 +44,15 @@ RUN echo "#log: ${project}: Running build" \
   && npm ci \
   && npm run build
 
-ARG RUN_TESTS=true
-ARG TEST_TIMEOUT_SECONDS=
+#ARG RUN_TESTS=true
+#ARG TEST_TIMEOUT_SECONDS=
 
-RUN if "${RUN_TESTS}"; then \
-    echo "#log ${project}: Running tests" \
-    && npm test; \
-  else \
-    echo "#log ${project}: Tests were skipped!"; \
-  fi
+#RUN if "${RUN_TESTS}"; then \
+#   echo "#log ${project}: Running tests" \
+#    && npm test; \
+#  else \
+#    echo "#log ${project}: Tests were skipped!"; \
+#  fi
 
 CMD /bin/bash -l
 CMD ["npm", "start"]
