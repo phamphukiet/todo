@@ -36,8 +36,11 @@ RUN echo "#log: ${project}: Setup system" \
   && npm i -g prebuildify@5 node-gyp@9 \
   && sync
 
-COPY . /usr/local/opt/${project}
-WORKDIR /usr/local/opt/${project}
+# Copy toàn bộ project vào container
+COPY . /app
+
+# Đặt thư mục làm việc là backend/
+WORKDIR /todo-app/backend
 
 RUN echo "#log: ${project}: Running build" \
   && set -x \
