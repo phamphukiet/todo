@@ -1,5 +1,5 @@
 function fetchAndShowUsername() {
-  fetch(`http://localhost:3000/api/user/${CURRENT_USER_ID}`)
+  fetch(`https://todo-b0us.onrender.com/api/user/${CURRENT_USER_ID}`)
     .then((res) => res.json())
     .then((user) => {
       document.getElementById(
@@ -15,10 +15,10 @@ function fetchAndShowUsername() {
 function fetchBlockTasks() {
   const weekNumber = getWeekNumber(currentDate);
   console.log("📦 Tải lại block data sau cập nhật...");
-  fetch(`http://localhost:3000/api/block/${CURRENT_USER_ID}?week=${weekNumber}`)
+  fetch(`https://todo-b0us.onrender.com/api/block/${CURRENT_USER_ID}?week=${weekNumber}`)
     .then((res) => res.json())
     .then(async (data) => {
-      const res = await fetch("http://localhost:3000/api/status");
+      const res = await fetch("https://todo-b0us.onrender.com/api/status");
       const allStatuses = await res.json();
       renderTasksByDay(data.tasks, allStatuses);
     })
@@ -28,7 +28,7 @@ function fetchBlockTasks() {
 function fetchTaskSummary() {
   const weekNumber = getWeekNumber(currentDate);
   fetch(
-    `http://localhost:3000/api/block/summary/${CURRENT_USER_ID}?week=${weekNumber}`
+    `https://todo-b0us.onrender.com/api/block/summary/${CURRENT_USER_ID}?week=${weekNumber}`
   )
     .then((res) => res.json())
     .then((data) => {
@@ -37,7 +37,7 @@ function fetchTaskSummary() {
 }
 
 function updateTaskStatus(taskId, newStatusId) {
-  const url = `http://localhost:3000/api/task/${taskId}/status`;
+  const url = `https://todo-b0us.onrender.com/api/task/${taskId}/status`;
   const payload = {
     method: "PUT",
     headers: { "Content-Type": "application/json" },

@@ -11,7 +11,7 @@ form.addEventListener("submit", async (e) => {
   if (!name) return;
 
   if (editingId) {
-    await fetch(`http://localhost:3000/api/status/${editingId}`, {
+    await fetch(`https://todo-b0us.onrender.com/api/status/${editingId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
@@ -19,7 +19,7 @@ form.addEventListener("submit", async (e) => {
     editingId = null;
     button.innerText = "➕ Thêm";
   } else {
-    await fetch("http://localhost:3000/api/status", {
+    await fetch("https://todo-b0us.onrender.com/api/status", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
@@ -37,14 +37,14 @@ function editStatus(id, name) {
 }
 
 async function deleteStatus(id) {
-  await fetch(`http://localhost:3000/api/status/${id}`, {
+  await fetch(`https://todo-b0us.onrender.com/api/status/${id}`, {
     method: "DELETE",
   });
   loadStatus();
 }
 
 async function loadStatus() {
-  const res = await fetch("http://localhost:3000/api/status");
+  const res = await fetch("https://todo-b0us.onrender.com/api/status");
   const data = await res.json();
   table.innerHTML = "";
 
@@ -54,12 +54,10 @@ async function loadStatus() {
         <td>${i + 1}</td>
         <td>${s.name}</td>
         <td>
-          <button class="btn btn-sm btn-warning me-1" onclick="editStatus(${
-            s.id
-          }, ${JSON.stringify(s.name)})">✏️ Sửa</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteStatus(${
-            s.id
-          })">🗑️ Xoá</button>
+          <button class="btn btn-sm btn-warning me-1" onclick="editStatus(${s.id
+      }, ${JSON.stringify(s.name)})">✏️ Sửa</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteStatus(${s.id
+      })">🗑️ Xoá</button>
         </td>
       </tr>
     `;
