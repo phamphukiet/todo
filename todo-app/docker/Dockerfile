@@ -55,3 +55,4 @@ RUN if "${RUN_TESTS}"; then \
   fi
 
 CMD /bin/bash -l
+CMD ["npm", "start"]
