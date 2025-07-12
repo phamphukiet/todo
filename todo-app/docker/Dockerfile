@@ -44,7 +44,7 @@ WORKDIR /todo-app/backend
 
 RUN echo "#log: ${project}: Running build" \
   && set -x \
-  && npm ci \
+  && npm install \
   && npm run build
 
 #ARG RUN_TESTS=true
