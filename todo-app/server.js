@@ -23,7 +23,7 @@ fs.readdirSync(routesPath).forEach((file) => {
     const routeName = file.replace(".js", "");
     const routePath = `/api/${routeName}`;
     try {
-      const routeModule = require(`./routes/${file}`);
+      const routeModule = require(`./backend/routes/${file}`);
       if (typeof routeModule !== "function") {
         throw new Error(`Không export ra router từ ${file}`);
       }
@@ -36,6 +36,7 @@ fs.readdirSync(routesPath).forEach((file) => {
     console.log(`✅ Route loaded: ${routePath}`);
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
