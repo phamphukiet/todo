@@ -59,3 +59,4 @@ RUN echo "#log: ${project}: Running build" \
 
 CMD /bin/bash -l
 CMD ["npm", "start"]
+CMD ["node", "server.js"]
