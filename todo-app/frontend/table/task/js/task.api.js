@@ -1,6 +1,6 @@
 function getAllTasks() {
   const userId = getCurrentUserId();
-  return fetch(`http://localhost:3000/api/task/${userId}`).then((res) => {
+  return fetch(`https://todo-b0us.onrender.com/api/task/${userId}`).then((res) => {
     if (!res.ok) throw new Error("Lỗi khi tải danh sách task");
     return res.json();
   });
@@ -8,7 +8,7 @@ function getAllTasks() {
 
 function createTask(task) {
   const userId = getCurrentUserId();
-  return fetch(`http://localhost:3000/api/task/${userId}`, {
+  return fetch(`https://todo-b0us.onrender.com/api/task/${userId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
@@ -19,7 +19,7 @@ function createTask(task) {
 }
 
 function updateTask(taskId, updatedTask) {
-  return fetch(`http://localhost:3000/api/task/${taskId}`, {
+  return fetch(`https://todo-b0us.onrender.com/api/task/${taskId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(updatedTask),
@@ -30,7 +30,7 @@ function updateTask(taskId, updatedTask) {
 }
 
 function deleteTask(taskId) {
-  return fetch(`http://localhost:3000/api/task/${taskId}`, {
+  return fetch(`https://todo-b0us.onrender.com/api/task/${taskId}`, {
     method: "DELETE",
   }).then((res) => {
     if (!res.ok) throw new Error("Xoá task thất bại");
