@@ -1,3 +1,12 @@
+// --- TỰ ĐỘNG SET LOCALSTORAGE SAU ĐĂNG NHẬP GOOGLE ---
+const urlParams = new URLSearchParams(window.location.search);
+const usernameFromUrl = urlParams.get("username");
+if (usernameFromUrl) {
+  localStorage.setItem("username", usernameFromUrl);
+  // Xoá query param để đẹp URL, tránh reload lại chạy tiếp
+  window.history.replaceState({}, document.title, "/index.html");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // LOGIN
   const loginForm = document.getElementById("loginForm");

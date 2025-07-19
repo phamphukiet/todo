@@ -185,3 +185,33 @@ body {
 #registerButton:hover {
   background: #0056b3;
 }
+.google-login-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.google-login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.google-login-button:hover {
+  background: #f7f7f7;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
