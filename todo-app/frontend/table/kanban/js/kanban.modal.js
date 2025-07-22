@@ -36,7 +36,7 @@ function showCreateTaskForm() {
       user_id: CURRENT_USER_ID,
     };
 
-    fetch(`https://todo-b0us.onrender.com/api/task/${CURRENT_USER_ID}`, {
+    fetch(`https://todo-backend2-41uh.onrender.com/api/task/${CURRENT_USER_ID}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task),
@@ -92,7 +92,7 @@ function showTaskDetail(task) {
       return;
     }
 
-    fetch(`https://todo-b0us.onrender.com/api/task/${task.id}`, {
+    fetch(`https://todo-backend2-41uh.onrender.com/api/task/${task.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),
