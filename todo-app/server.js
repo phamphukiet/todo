@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 const googleAuthRoutes = require("./backend/routes/googleAuth");
 app.use(googleAuthRoutes);
 
