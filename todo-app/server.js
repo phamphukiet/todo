@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const passport = require("passport");
 const pool = require("./backend/db/db"); // Kết nối CSDL
 require("./backend/db/db"); // Khởi tạo CSDL nếu chưa có
 require("./backend/db/init_db");
@@ -8,6 +9,10 @@ require("dotenv").config();
 
 const app = express();
 app.use(express.json());
+
+app.use(passport.initialize());
+const googleAuthRoutes = require("./backend/routes/googleAuth");
+app.use(googleAuthRoutes);
 
 const frontendPath = path.join(__dirname, "./frontend");
 console.log("Serving static files from:", frontendPath);
