@@ -1,5 +1,5 @@
 // init_db.js
-const pool = require("./db");
+const pool = require("./index");
 
 (async () => {
     try {
