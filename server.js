@@ -1,8 +1,8 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const pool = require("./backend/db/index");
-require("./backend/db/index");
+const pool = require("./todo-app/backend/db/index");
+require("./todo-app/backend/db/index");
 require("dotenv").config();
 
 //2 dòng lệnh sử dụng cho googleAuth.js
