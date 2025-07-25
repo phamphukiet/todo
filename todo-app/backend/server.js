@@ -41,12 +41,12 @@ fs.readdirSync(routesPath).forEach((file) => {
         throw new Error(`Không export ra router từ ${file}`);
       }
       app.use(routePath, routeModule);
-      console.log(`✅ Route loaded: ${routePath}`);
+      console.log(`✅ Route sunce loaded: ${routePath}`);
     } catch (err) {
       console.error(`❌ Route ${file} lỗi: ${err.message}`);
     }
 
-    console.log(`✅ Route loaded: ${routePath}`);
+    console.log(`✅ Route sunce loaded: ${routePath}`);
   }
 });
 
