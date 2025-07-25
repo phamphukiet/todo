@@ -38,7 +38,7 @@ fs.readdirSync(routesPath).forEach((file) => {
     const routeName = file.replace(".js", "");
     const routePath = `/api/${routeName}`;
     try {
-      const routeModule = require(`./routes/${file}`);
+      const routeModule = require(`./todo-app/backend/routes/${file}`);
       if (typeof routeModule !== "function") {
         throw new Error(`Không export ra router từ ${file}`);
       }
