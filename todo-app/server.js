@@ -1,8 +1,9 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
-const pool = require("./backend/db/index"); // Kết nối CSDL
-require("./backend/db/index"); // Khởi tạo CSDL nếu chưa có
+const pool = require("./backend/db/db"); // Kết nối CSDL
+require("./backend/db/db"); // Khởi tạo CSDL nếu chưa có
+require("./backend/db/init_db");
 require("dotenv").config();
 
 const app = express();
