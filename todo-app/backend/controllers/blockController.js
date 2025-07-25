@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../db/db");
 const { getWeekRangeFromWeekNumber } = require("../utils/dateHelper.js"); // helper ta sẽ viết
 
 // API: /api/block/:user_id?week=27

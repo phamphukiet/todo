@@ -1,4 +1,4 @@
-const pool = require("../db");
+const pool = require("../db/db");
 
 exports.createStatus = async (req, res) => {
   const { name } = req.body;
