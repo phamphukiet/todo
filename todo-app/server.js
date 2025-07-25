@@ -1,6 +1,8 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const pool = require("./db");
+require("./db");
 require("dotenv").config();
 
 const app = express();
