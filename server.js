@@ -13,13 +13,13 @@ const app = express();
 app.use(express.json());
 
 // --- TỰ ĐỘNG SET LOCALSTORAGE SAU ĐĂNG NHẬP GOOGLE ---
-const urlParams = new URLSearchParams(window.location.search);
-const usernameFromUrl = urlParams.get("username");
-if (usernameFromUrl) {
-  localStorage.setItem("username", usernameFromUrl);
-  // Xoá query param để đẹp URL, tránh reload lại chạy tiếp
-  window.history.replaceState({}, document.title, "/index.html");
-}
+// const urlParams = new URLSearchParams(window.location.search);
+// const usernameFromUrl = urlParams.get("username");
+// if (usernameFromUrl) {
+//   localStorage.setItem("username", usernameFromUrl);
+//   // Xoá query param để đẹp URL, tránh reload lại chạy tiếp
+//   window.history.replaceState({}, document.title, "/index.html");
+// }
 
 const frontendPath = path.join(__dirname, "../frontend");
 console.log("Serving static files from:", frontendPath);
