@@ -10,7 +10,7 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 
-app.use(passport.initialize());
+//app.use(passport.initialize());
 //app.use(passport.session());
 const googleAuthRoutes = require("./backend/routes/googleAuth");
 app.use(googleAuthRoutes);
