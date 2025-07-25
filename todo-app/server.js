@@ -11,12 +11,23 @@ const app = express();
 app.use(express.json());
 
 app.use(passport.initialize());
+app.use(passport.session());
 const googleAuthRoutes = require("./backend/routes/googleAuth");
 app.use(googleAuthRoutes);
 
 const frontendPath = path.join(__dirname, "./frontend");
 console.log("Serving static files from:", frontendPath);
 app.use(express.static(frontendPath));
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || "sunce",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // ⚠️ để true nếu dùng HTTPS trên production
+    maxAge: 24 * 60 * 60 * 1000 // 1 ngày
+  }
+}));
 
 // Ghi log request
 app.use((req, res, next) => {
