@@ -78,7 +78,5 @@ const pool = require("./db");
         console.log("✅ Đã khởi tạo dữ liệu mẫu thành công!");
     } catch (err) {
         console.error("❌ Lỗi khởi tạo DB:", err.message);
-    } finally {
-        await pool.end();
     }
 })();
