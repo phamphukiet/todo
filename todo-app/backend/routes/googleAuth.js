@@ -16,12 +16,15 @@ const router = express.Router();
 
 // Khai báo Passport Google Strategy
 passport.use(new GoogleStrategy({
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
+  //clientID: GOOGLE_CLIENT_ID,
+  //clientSecret: GOOGLE_CLIENT_SECRET,
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "/auth/google/callback",
   passReqToCallback: true,
 },
   async (req, accessToken, refreshToken, profile, done) => {
+    console.log(profile);
     const email = profile.emails[0].value;
     try {
       const result = await pool.query("SELECT * FROM users WHERE username = $1", [email]);
