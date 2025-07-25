@@ -36,7 +36,7 @@ function showCreateTaskForm() {
       user_id: CURRENT_USER_ID,
     };
 
-    fetch(`https://todo-backend2-41uh.onrender.com/api/task/${CURRENT_USER_ID}`, {
+    fetch(`https://todo-b0us.onrender.com/api/task/${CURRENT_USER_ID}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task),
@@ -63,11 +63,11 @@ function showTaskDetail(task) {
   document.getElementById(
     "taskModalDesc"
   ).innerHTML = `<textarea id="modalEditDesc" class="form-control" rows="3">${task.description || ""
-    }</textarea>`;
+  }</textarea>`;
   document.getElementById(
     "taskModalDue"
   ).innerHTML = `🕒 Hạn chót: <input id="modalEditDue" type="date" class="form-control form-control-sm mt-1" value="${task.due_date.split("T")[0]
-    }" />`;
+  }" />`;
 
   const btnDelete = document.getElementById("btnDeleteTask");
   btnDelete.style.display = "inline-block";
@@ -92,7 +92,7 @@ function showTaskDetail(task) {
       return;
     }
 
-    fetch(`https://todo-backend2-41uh.onrender.com/api/task/${task.id}`, {
+    fetch(`https://todo-b0us.onrender.com/api/task/${task.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),

@@ -11,7 +11,7 @@ form.addEventListener("submit", async (e) => {
   if (!name) return;
 
   if (editingId) {
-    await fetch(`https://todo-backend2-41uh.onrender.com/api/status/${editingId}`, {
+    await fetch(`https://todo-b0us.onrender.com/api/status/${editingId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
@@ -19,7 +19,7 @@ form.addEventListener("submit", async (e) => {
     editingId = null;
     button.innerText = "➕ Thêm";
   } else {
-    await fetch("https://todo-backend2-41uh.onrender.com/api/status", {
+    await fetch("https://todo-b0us.onrender.com/api/status", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
@@ -37,14 +37,14 @@ function editStatus(id, name) {
 }
 
 async function deleteStatus(id) {
-  await fetch(`https://todo-backend2-41uh.onrender.com/api/status/${id}`, {
+  await fetch(`https://todo-b0us.onrender.com/api/status/${id}`, {
     method: "DELETE",
   });
   loadStatus();
 }
 
 async function loadStatus() {
-  const res = await fetch("https://todo-backend2-41uh.onrender.com/api/status");
+  const res = await fetch("https://todo-b0us.onrender.com/api/status");
   const data = await res.json();
   table.innerHTML = "";
 

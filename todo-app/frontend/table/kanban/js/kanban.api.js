@@ -1,5 +1,5 @@
 function updateTaskStatus(taskId, newStatusId) {
-  fetch(`https://todo-backend2-41uh.onrender.com/api/task/${taskId}/status`, {
+  fetch(`https://todo-b0us.onrender.com/api/task/${taskId}/status`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status_id: parseInt(newStatusId) }),
@@ -13,7 +13,7 @@ function updateTaskStatus(taskId, newStatusId) {
 }
 
 function deleteTask(taskId) {
-  fetch(`https://todo-backend2-41uh.onrender.com/api/task/${taskId}`, {
+  fetch(`https://todo-b0us.onrender.com/api/task/${taskId}`, {
     method: "DELETE",
   })
     .then((res) => {
@@ -29,10 +29,10 @@ function deleteTask(taskId) {
 
 function loadKanbanData() {
   Promise.all([
-    fetch(`https://todo-backend2-41uh.onrender.com/api/kanban/${CURRENT_USER_ID}`).then((res) =>
+    fetch(`https://todo-b0us.onrender.com/api/kanban/${CURRENT_USER_ID}`).then((res) =>
       res.json()
     ),
-    fetch(`https://todo-backend2-41uh.onrender.com/api/status`).then((res) => res.json()),
+    fetch(`https://todo-b0us.onrender.com/api/status`).then((res) => res.json()),
   ])
     .then(([kanbanData, allStatuses]) => {
       const overdueTasks = [];
