@@ -33,24 +33,28 @@ app.use((req, res, next) => {
 
 // Tự động load tất cả file trong routes/
 const routesPath = path.join(__dirname, "routes");
-fs.readdirSync(routesPath).forEach((file) => {
-  if (file.endsWith(".js")) {
-    const routeName = file.replace(".js", "");
-    const routePath = `/api/${routeName}`;
-    try {
-      const routeModule = require(`./todo-app/backend/routes/${file}`);
-      if (typeof routeModule !== "function") {
-        throw new Error(`Không export ra router từ ${file}`);
-      }
-      app.use(routePath, routeModule);
-      console.log(`✅ Route loaded: ${routePath}`);
-    } catch (err) {
-      console.error(`❌ Route ${file} lỗi: ${err.message}`);
-    }
 
-    console.log(`✅ Route loaded: ${routePath}`);
-  }
-});
+if (fs.existsSync(routesPath)) {
+  fs.readdirSync(routesPath).forEach((file) => {
+    if (file.endsWith(".js")) {
+      const routeName = file.replace(".js", "");
+      const routePath = `/api/${routeName}`;
+      try {
+        const routeModule = require(`./routes/${file}`);
+        if (typeof routeModule !== "function") {
+          throw new Error(`Không export ra router từ ${file}`);
+        }
+        app.use(routePath, routeModule);
+        console.log(`✅ Route loaded: ${routePath}`);
+      } catch (err) {
+        console.error(`❌ Route ${file} lỗi: ${err.message}`);
+      }
+    }
+  });
+} else {
+  console.warn("⚠️  Không tìm thấy thư mục 'routes/'. Không có route nào được load.");
+}
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
