@@ -1,6 +1,8 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const pool = require("./db/index");
+require("./db/index");
 require("dotenv").config();
 
 //2 dòng lệnh sử dụng cho googleAuth.js
